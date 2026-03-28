@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "commands": [
+    {
+      "id": "download_all_supported",
+      "command": "python scripts/download_open_corpora.py --source speech_commands --source voxforge --voxforge-limit 50"
+    },
+    {
+      "id": "extract_downloads",
+      "command": "python scripts/extract_downloads.py"
+    },
+    {
+      "id": "bootstrap_speech_commands",
+      "command": "python scripts/bootstrap_training_repo.py --source-root downloads/extracted/speech_commands_v0.02"
+    },
+    {
+      "id": "rebuild_three_layers",
+      "command": "python scripts/build_word_shape_index.py --staged-root staged --artifacts-root artifacts"
+    }
+  ]
+}

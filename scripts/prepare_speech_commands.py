@@ -41,6 +41,10 @@ def stage_speech_commands(
         if not source_dir.exists():
             continue
         target_dir = output_root / label
+        if target_dir.exists():
+            # Re-stage each label cleanly so repeated runs do not silently mix
+            # synthetic smoke data or older imports into the current corpus.
+            shutil.rmtree(target_dir)
         target_dir.mkdir(parents=True, exist_ok=True)
         copied = 0
         for clip in sorted(source_dir.glob("*.wav")):

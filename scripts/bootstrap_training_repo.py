@@ -14,7 +14,11 @@ REPO_ROOT = THIS_DIR.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from momentzip_speech_wave_training.word_shape_training import build_label_bank, build_word_shape_index
+from momentzip_speech_wave_training.word_shape_training import (
+    build_label_bank,
+    build_three_layer_indexes,
+    build_word_shape_index,
+)
 from prepare_speech_commands import DEFAULT_LABELS, stage_speech_commands
 
 
@@ -64,6 +68,7 @@ def main() -> None:
 
     index_path = build_word_shape_index(staged_root, artifacts_root)
     label_bank_path = build_label_bank(index_path, artifacts_root / "label_bank.json")
+    layer_paths = build_three_layer_indexes(index_path, label_bank_path, artifacts_root)
 
     report_path = artifacts_root / "bootstrap_report.json"
     report_path.write_text(
@@ -74,6 +79,7 @@ def main() -> None:
                 "stage_manifest": stage_manifest,
                 "word_shape_index_path": str(index_path),
                 "label_bank_path": str(label_bank_path),
+                "three_layer_paths": layer_paths,
             },
             indent=2,
         ),

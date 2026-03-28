@@ -27,10 +27,22 @@ Details and credits live in [`DATASETS.md`](DATASETS.md).
 
 - `datasets/registry.json`
   - source registry and license notes
+- `datasets/commands.json`
+  - command shortcuts for mass fetch and rebuild flows
+- `downloads/`
+  - raw source archives kept inside the repo workspace
+- `staged/`
+  - label-organized WAV clips ready for isolated-word learning
+- `momentzip_speech_wave_training/`
+  - standalone archive and 3-layer indexing code
 - `scripts/prepare_speech_commands.py`
   - stages isolated-word clips into this repo
+- `scripts/download_open_corpora.py`
+  - downloads official open-source corpora into `downloads/`
+- `scripts/extract_downloads.py`
+  - extracts repo-managed archives into `downloads/extracted/`
 - `scripts/build_word_shape_index.py`
-  - turns staged clips into waveform and signal-token indexes
+  - turns staged clips into waveform, hash, and 3-layer indexes
 - `artifacts/`
   - local outputs, indexes, manifests, and generated archives
 
@@ -63,10 +75,23 @@ The main outputs are:
 
 - `artifacts/word_shape_index.json`
 - `artifacts/label_bank.json`
+- `artifacts/layer_v1_raw_index.json`
+- `artifacts/layer_v2_signal_index.json`
+- `artifacts/layer_v3_semantic_index.json`
 - `artifacts/bootstrap_report.json`
+
+## Three-Layer Compression Model
+
+- `v1 raw`
+  - exact clip truth and reversible `wavtxt`
+- `v2 signal`
+  - structural frame tokens, waveform meaning, and signal hashes
+- `v3 semantic`
+  - aggregated label banks, dominant waveform traits, and semantic hashes
+
+This is the repo form of the AH speech 3-version system and hash system.
 
 ## GitHub Publish Note
 
-This scaffold is ready for a dedicated GitHub repo, but the current `gh` login on this machine is invalid, so the publish step is blocked until GitHub auth is fixed.
-
-See `PUBLISHING.md` for the clean push flow once auth is repaired.
+This scaffold is now published as its own GitHub repo. `PUBLISHING.md` still
+documents the local publish flow if the repo ever needs to be recreated.

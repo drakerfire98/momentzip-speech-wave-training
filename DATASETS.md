@@ -66,3 +66,19 @@ Why:
 Why:
 - it is better for phrase and accent robustness than for the very first
   isolated-word bank
+
+## Processing Notes
+
+- `Speech Commands`
+  - direct fit for the full 3-layer system
+  - WAV files can be promoted straight into raw, signal, and semantic layers
+
+- `VoxForge`
+  - strong mass open corpus
+  - best used for raw and signal learning first, then promoted further as
+    segmentation and transcript mapping improve
+
+- `Common Voice`
+  - good broader source, but many distributions are MP3-based
+  - keep it organized in the repo workspace and only promote it into the
+    WAV-based 3-layer system after an explicit conversion route exists

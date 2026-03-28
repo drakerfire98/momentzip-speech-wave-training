@@ -8,6 +8,10 @@
       "homepage": "https://www.tensorflow.org/datasets/catalog/speech_commands",
       "paper": "https://arxiv.org/abs/1804.03209",
       "citation_hint": "Speech Commands: A Dataset for Limited-Vocabulary Speech Recognition",
+      "download_url": "https://storage.googleapis.com/download.tensorflow.org/data/speech_commands_v0.02.tar.gz",
+      "archive_kind": "tar.gz",
+      "audio_format": "wav",
+      "processing_support": "full_three_layer",
       "license_note": "Check upstream dataset metadata and bundled license before redistribution.",
       "priority": "primary",
       "use_for": [
@@ -22,6 +26,10 @@
       "kind": "open_speech_corpus",
       "homepage": "https://www.voxforge.org/",
       "about": "https://www.voxforge.org/home/about",
+      "listing_url": "https://repository.voxforge1.org/downloads/SpeechCorpus/Trunk/Audio/Main/16kHz_16bit/",
+      "archive_kind": "tgz",
+      "audio_format": "wav",
+      "processing_support": "raw_and_signal_first",
       "license_note": "VoxForge discusses GPL-oriented corpus use; keep derivative packaging conservative.",
       "priority": "secondary",
       "use_for": [
@@ -35,6 +43,9 @@
       "kind": "multilingual_sentence_speech",
       "homepage": "https://www.mozillafoundation.org/en/common-voice",
       "dataset_page": "https://datacollective.mozillafoundation.org/datasets/cmj8u3p1w0075nxxbe8bedl00",
+      "audio_format": "mp3",
+      "processing_support": "download_and_manifest_only_until_wav_conversion",
+      "download_mode": "explicit_locale_url_required",
       "license_note": "Use primarily for accent and phrase variation rather than speaker-identity work.",
       "priority": "optional",
       "use_for": [

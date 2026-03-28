@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -12,6 +13,11 @@ from .audio_archive_runtime import archive_wav_with_tokens
 
 def _read_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _json_hash(payload: object) -> str:
+    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
 
 
 def build_word_shape_index(staged_root: Path, artifacts_root: Path) -> Path:
@@ -84,3 +90,55 @@ def build_label_bank(index_path: Path, output_path: Path) -> Path:
         encoding="utf-8",
     )
     return output_path
+
+
+def build_three_layer_indexes(index_path: Path, label_bank_path: Path, artifacts_root: Path) -> dict[str, str]:
+    index_payload = _read_json(index_path)
+    label_bank_payload = _read_json(label_bank_path)
+
+    raw_entries: List[dict] = []
+    signal_entries: List[dict] = []
+    for entry in index_payload.get("entries", []):
+        raw_entries.append(
+            {
+                "label": entry["label"],
+                "clip_path": entry["clip_path"],
+                "raw_hash": entry["wav_sha256"],
+                "wavtxt_path": entry["wavtxt_path"],
+                "restored_path": entry["restored_path"],
+            }
+        )
+        signal_payload = _read_json(Path(entry["signal_tokens_path"]))
+        meaning_payload = _read_json(Path(entry["waveform_meaning_path"]))
+        signal_entries.append(
+            {
+                "label": entry["label"],
+                "clip_path": entry["clip_path"],
+                "signal_hash": _json_hash(signal_payload),
+                "meaning_hash": _json_hash(meaning_payload),
+                "signal_tokens_path": entry["signal_tokens_path"],
+                "waveform_meaning_path": entry["waveform_meaning_path"],
+                "waveform_summary": entry["waveform_summary"],
+                "silence_ratio": entry["silence_ratio"],
+            }
+        )
+
+    semantic_labels = {}
+    for label, payload in label_bank_payload.get("labels", {}).items():
+        semantic_labels[label] = {
+            **payload,
+            "semantic_hash": _json_hash(payload),
+        }
+
+    artifacts_root.mkdir(parents=True, exist_ok=True)
+    raw_path = artifacts_root / "layer_v1_raw_index.json"
+    signal_path = artifacts_root / "layer_v2_signal_index.json"
+    semantic_path = artifacts_root / "layer_v3_semantic_index.json"
+    raw_path.write_text(json.dumps({"version": 1, "entries": raw_entries}, indent=2), encoding="utf-8")
+    signal_path.write_text(json.dumps({"version": 2, "entries": signal_entries}, indent=2), encoding="utf-8")
+    semantic_path.write_text(json.dumps({"version": 3, "labels": semantic_labels}, indent=2, sort_keys=True), encoding="utf-8")
+    return {
+        "layer_v1_raw_index": str(raw_path),
+        "layer_v2_signal_index": str(signal_path),
+        "layer_v3_semantic_index": str(semantic_path),
+    }
