@@ -35,6 +35,8 @@ Details and credits live in [`DATASETS.md`](DATASETS.md).
   - label-organized WAV clips ready for isolated-word learning
 - `momentzip_speech_wave_training/`
   - standalone archive and 3-layer indexing code
+- `momentzip_speech_wave_training/proto_phoneme_training.py`
+  - unsupervised subword segmentation and speaker-invariant prototype building
 - `scripts/prepare_speech_commands.py`
   - stages isolated-word clips into this repo
 - `scripts/download_open_corpora.py`
@@ -43,6 +45,8 @@ Details and credits live in [`DATASETS.md`](DATASETS.md).
   - extracts repo-managed archives into `downloads/extracted/`
 - `scripts/build_word_shape_index.py`
   - turns staged clips into waveform, hash, and 3-layer indexes
+- `scripts/build_proto_phoneme_bank.py`
+  - builds proto-phoneme clusters and speaker-invariant word shapes
 - `artifacts/`
   - local outputs, indexes, manifests, and generated archives
 
@@ -78,6 +82,8 @@ The main outputs are:
 - `artifacts/layer_v1_raw_index.json`
 - `artifacts/layer_v2_signal_index.json`
 - `artifacts/layer_v3_semantic_index.json`
+- `artifacts/proto_phoneme_index.json`
+- `artifacts/speaker_invariant_bank.json`
 - `artifacts/bootstrap_report.json`
 
 ## Three-Layer Compression Model
@@ -90,6 +96,19 @@ The main outputs are:
   - aggregated label banks, dominant waveform traits, and semantic hashes
 
 This is the repo form of the AH speech 3-version system and hash system.
+
+## Next Speech Layer
+
+The repo now also supports:
+
+- `proto phoneme` shapes
+  - unsupervised subword-like segments learned from waveform changes
+- `speaker invariant` shapes
+  - per-word prototypes normalized across different speakers
+
+These are the honest first steps toward phoneme decomposition and
+speaker-invariant recognition. They are not full IPA-aligned phoneme learning
+yet.
 
 ## GitHub Publish Note
 

@@ -16,6 +16,10 @@
     {
       "id": "rebuild_three_layers",
       "command": "python scripts/build_word_shape_index.py --staged-root staged --artifacts-root artifacts"
+    },
+    {
+      "id": "build_proto_phoneme_and_invariant_banks",
+      "command": "python scripts/build_proto_phoneme_bank.py --staged-root staged --artifacts-root artifacts"
     }
   ]
 }
