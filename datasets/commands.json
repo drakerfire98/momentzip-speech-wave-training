@@ -24,6 +24,14 @@
     {
       "id": "build_voxforge_transition_bank",
       "command": "python scripts/build_transition_bank.py --voxforge-root downloads/voxforge --artifacts-root artifacts"
+    },
+    {
+      "id": "build_emotional_contour_bank",
+      "command": "python scripts/build_emotional_contour_bank.py --staged-root staged --voxforge-root downloads/voxforge --artifacts-root artifacts"
+    },
+    {
+      "id": "build_concept_bridge",
+      "command": "python scripts/build_concept_bridge.py --artifacts-root artifacts"
     }
   ]
 }

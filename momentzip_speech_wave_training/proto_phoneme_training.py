@@ -241,6 +241,31 @@ def _similarity(left: dict, right: dict) -> float:
     return round(max(0.0, 1.0 - (sum(deltas) / len(deltas))), 5)
 
 
+def build_clip_signature(wav_path: Path, bins: int = 24) -> dict:
+    return _contour_signature(build_signal_tokens(wav_path), bins=bins)
+
+
+def signature_similarity(left: dict, right: dict) -> float:
+    return _similarity(left, right)
+
+
+def extract_proto_sequence(wav_path: Path) -> List[str]:
+    voiced_frames = _trim_silence(build_signal_tokens(wav_path))
+    sequence: List[str] = []
+    for segment in _segment_frames(voiced_frames):
+        summary = _summarize_segment(segment, voiced_frames)
+        sequence.append(
+            _shape_key(
+                duration_ratio=float(summary["duration_ratio"]),
+                rms_ratio=float(summary["mean_rms_ratio"]),
+                peak_ratio=float(summary["mean_peak_ratio"]),
+                zcr_ratio=float(summary["mean_zcr_ratio"]),
+                edge_ratio=float(summary["edge_ratio"]),
+            )
+        )
+    return sequence
+
+
 def build_speaker_invariant_bank(staged_root: Path, output_path: Path) -> Path:
     label_bank: dict[str, dict] = {}
     for label_dir in sorted(path for path in staged_root.iterdir() if path.is_dir()):

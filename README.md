@@ -39,6 +39,10 @@ Details and credits live in [`DATASETS.md`](DATASETS.md).
   - unsupervised subword segmentation and speaker-invariant prototype building
 - `momentzip_speech_wave_training/transition_learning.py`
   - continuous-speech transition learning from VoxForge sentence archives
+- `momentzip_speech_wave_training/emotional_contour_training.py`
+  - emotional signature extraction and word-level emotion overlays
+- `momentzip_speech_wave_training/concept_bridge.py`
+  - direct waveform-to-concept bridge plus recognition
 - `scripts/prepare_speech_commands.py`
   - stages isolated-word clips into this repo
 - `scripts/download_open_corpora.py`
@@ -51,6 +55,10 @@ Details and credits live in [`DATASETS.md`](DATASETS.md).
   - builds proto-phoneme clusters and speaker-invariant word shapes
 - `scripts/build_transition_bank.py`
   - builds sentence-blend signatures and word-to-word transition prototypes
+- `scripts/build_emotional_contour_bank.py`
+  - builds emotional contour prototypes and per-word emotion overlays
+- `scripts/build_concept_bridge.py`
+  - builds the waveform-to-concept bridge and can recognize a new WAV clip
 - `artifacts/`
   - local outputs, indexes, manifests, and generated archives
 
@@ -90,6 +98,9 @@ The main outputs are:
 - `artifacts/speaker_invariant_bank.json`
 - `artifacts/voxforge_transition_bank.json`
 - `artifacts/voxforge_sentence_blends.json`
+- `artifacts/emotional_contour_bank.json`
+- `artifacts/word_emotional_overlay.json`
+- `artifacts/concept_bridge.json`
 - `artifacts/bootstrap_report.json`
 
 ## Three-Layer Compression Model
@@ -126,6 +137,19 @@ packs:
 
 This is not forced alignment yet. It uses prompt text plus normalized sentence
 timing to learn likely boundary shapes between adjacent words.
+
+## Emotion And Concept Bridge
+
+The repo now also supports:
+
+- emotional contour overlays like `calm`, `urgent`, `hesitant`, `confident`,
+  and `stressed`
+- direct waveform-to-concept bridging for the trained words
+- a `recognize(wav_path)` pipeline that returns:
+  - matched word
+  - speaker similarity
+  - emotion classification
+  - suggested concept node
 
 ## GitHub Publish Note
 
