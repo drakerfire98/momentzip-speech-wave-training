@@ -37,6 +37,8 @@ Details and credits live in [`DATASETS.md`](DATASETS.md).
   - standalone archive and 3-layer indexing code
 - `momentzip_speech_wave_training/proto_phoneme_training.py`
   - unsupervised subword segmentation and speaker-invariant prototype building
+- `momentzip_speech_wave_training/transition_learning.py`
+  - continuous-speech transition learning from VoxForge sentence archives
 - `scripts/prepare_speech_commands.py`
   - stages isolated-word clips into this repo
 - `scripts/download_open_corpora.py`
@@ -47,6 +49,8 @@ Details and credits live in [`DATASETS.md`](DATASETS.md).
   - turns staged clips into waveform, hash, and 3-layer indexes
 - `scripts/build_proto_phoneme_bank.py`
   - builds proto-phoneme clusters and speaker-invariant word shapes
+- `scripts/build_transition_bank.py`
+  - builds sentence-blend signatures and word-to-word transition prototypes
 - `artifacts/`
   - local outputs, indexes, manifests, and generated archives
 
@@ -84,6 +88,8 @@ The main outputs are:
 - `artifacts/layer_v3_semantic_index.json`
 - `artifacts/proto_phoneme_index.json`
 - `artifacts/speaker_invariant_bank.json`
+- `artifacts/voxforge_transition_bank.json`
+- `artifacts/voxforge_sentence_blends.json`
 - `artifacts/bootstrap_report.json`
 
 ## Three-Layer Compression Model
@@ -109,6 +115,17 @@ The repo now also supports:
 These are the honest first steps toward phoneme decomposition and
 speaker-invariant recognition. They are not full IPA-aligned phoneme learning
 yet.
+
+## Continuous Speech Layer
+
+The repo also supports a first continuous-speech pass from VoxForge sentence
+packs:
+
+- sentence-level blend signatures
+- approximate word-to-word transition prototypes
+
+This is not forced alignment yet. It uses prompt text plus normalized sentence
+timing to learn likely boundary shapes between adjacent words.
 
 ## GitHub Publish Note
 

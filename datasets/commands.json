@@ -20,6 +20,10 @@
     {
       "id": "build_proto_phoneme_and_invariant_banks",
       "command": "python scripts/build_proto_phoneme_bank.py --staged-root staged --artifacts-root artifacts"
+    },
+    {
+      "id": "build_voxforge_transition_bank",
+      "command": "python scripts/build_transition_bank.py --voxforge-root downloads/voxforge --artifacts-root artifacts"
     }
   ]
 }
