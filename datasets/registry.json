@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": "speech_commands",
+      "label": "Speech Commands",
+      "kind": "isolated_words",
+      "homepage": "https://www.tensorflow.org/datasets/catalog/speech_commands",
+      "paper": "https://arxiv.org/abs/1804.03209",
+      "citation_hint": "Speech Commands: A Dataset for Limited-Vocabulary Speech Recognition",
+      "license_note": "Check upstream dataset metadata and bundled license before redistribution.",
+      "priority": "primary",
+      "use_for": [
+        "word-shape learning",
+        "isolated keyword waveform variation",
+        "signal-token supervision"
+      ]
+    },
+    {
+      "id": "voxforge",
+      "label": "VoxForge",
+      "kind": "open_speech_corpus",
+      "homepage": "https://www.voxforge.org/",
+      "about": "https://www.voxforge.org/home/about",
+      "license_note": "VoxForge discusses GPL-oriented corpus use; keep derivative packaging conservative.",
+      "priority": "secondary",
+      "use_for": [
+        "broader open speech variation",
+        "open corpus experiments"
+      ]
+    },
+    {
+      "id": "common_voice",
+      "label": "Mozilla Common Voice",
+      "kind": "multilingual_sentence_speech",
+      "homepage": "https://www.mozillafoundation.org/en/common-voice",
+      "dataset_page": "https://datacollective.mozillafoundation.org/datasets/cmj8u3p1w0075nxxbe8bedl00",
+      "license_note": "Use primarily for accent and phrase variation rather than speaker-identity work.",
+      "priority": "optional",
+      "use_for": [
+        "accent variation",
+        "phrase variation",
+        "broader speech robustness"
+      ]
+    }
+  ]
+}
